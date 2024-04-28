@@ -32,8 +32,8 @@ Code at the speed of thought - Zed is a high-performance, multiplayer code edito
 %build
 unset https_proxy http_proxy
 export RUSTFLAGS="$RUSTFLAGS -C target-cpu=westmere -C target-feature=+avx,+fma,+avx2 -C opt-level=3 -C codegen-units=1 -C panic=abort -Clink-arg=-Wl,-z,now,-z,relro,-z,max-page-size=0x4000,-z,separate-code "
-cargo build --release --frozen --all-features
-
+cargo build --release --all-features
+# --frozen
 
 %install
 install -D -m755 target/release/Zed %{buildroot}/usr/bin/Zed
