@@ -1,8 +1,11 @@
+%global livekit_ver 8645a138fb2ea72c4dab13e739b1f3c9ea29ac84
+
 Name:           zed
 Version:        %(unset https_proxy && curl -s https://api.github.com/repos/zed-industries/zed/releases/latest | grep -oP '"tag_name": "v\K(.*)(?=")')
 Release:        1
 URL:            https://github.com/zed-industries/zed
 Source0:        https://github.com/zed-industries/zed/archive/refs/tags/v%{version}.tar.gz
+Source1:        https://github.com/livekit/protocol/archive/%{livekit_ver}/protocol-%{livekit-ver}.tar.gz
 #Source0:        https://github.com/zed-industries/zed/archive/refs/heads/master.tar.gz
 Summary:        Lightning-fast and Powerful Code Editor written in Rust
 License:        AGPL-3.0-or-later
@@ -25,8 +28,10 @@ Code at the speed of thought - Zed is a high-performance, multiplayer code edito
 
 
 %prep
-# lapce-%{version}
-%setup -q -n zed-%{version}
+%setup -q -n zed-%{version} -a 1
+rm -rf crates/live_kit_server/protocol
+ln -sT protocol-%{livekit_ver} crates/live_kit_server/protocol
+
 
 
 %build
