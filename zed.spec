@@ -5,7 +5,7 @@ Version:        %(unset https_proxy && curl -s https://api.github.com/repos/zed-
 Release:        1
 URL:            https://github.com/zed-industries/zed
 Source0:        https://github.com/zed-industries/zed/archive/refs/tags/v%{version}.tar.gz
-Source1:        https://github.com/livekit/protocol/archive/%{livekit_ver}/protocol-%{livekit-ver}.tar.gz
+Source1:        https://github.com/livekit/protocol/archive/%{livekit_ver}/protocol-%{livekit_ver}.tar.gz
 #Source0:        https://github.com/zed-industries/zed/archive/refs/heads/master.tar.gz
 Summary:        Lightning-fast and Powerful Code Editor written in Rust
 License:        AGPL-3.0-or-later
