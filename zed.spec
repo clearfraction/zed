@@ -30,6 +30,7 @@ Code at the speed of thought - Zed is a high-performance, multiplayer code edito
 %prep
 unset https_proxy http_proxy
 %setup -q -n zed-%{version} -a 1
+git config --global --add safe.directory /home
 git submodule update --init --recursive
 rm -rf crates/live_kit_server/protocol
 ln -sT protocol-%{livekit_ver} crates/live_kit_server/protocol
