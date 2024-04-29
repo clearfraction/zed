@@ -37,7 +37,7 @@ ls -l
 #git config --global --add safe.directory /home
 #git submodule update --init --recursive
 rm -rf crates/live_kit_server/protocol
-ln -sT protocol-%{livekit_ver} crates/live_kit_server/protocol
+mv protocol-%{livekit_ver} crates/live_kit_server/protocol
 echo "list crates/live_kit_server/protocol"
 ls -l crates/live_kit_server/protocol
 exit 1
