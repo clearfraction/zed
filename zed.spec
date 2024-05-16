@@ -9,19 +9,21 @@ Source1:        https://github.com/livekit/protocol/archive/%{livekit_ver}/proto
 #Source0:        https://github.com/zed-industries/zed/archive/refs/heads/master.tar.gz
 Summary:        Lightning-fast and Powerful Code Editor written in Rust
 License:        AGPL-3.0-or-later
-BuildRequires:  rustc
-BuildRequires:  pkg-config
-BuildRequires:  libxcb-dev
-BuildRequires:  freetype-dev
-BuildRequires:  fontconfig-dev
-BuildRequires:  mesa-dev
-BuildRequires:  libxkbcommon-dev
-BuildRequires:  pango-dev
-BuildRequires:  wayland-dev wayland-protocols-dev
-BuildRequires:  alsa-lib-dev
-BuildRequires:  Vulkan-Headers-dev
-BuildRequires:  openssl-dev
-BuildRequires:  zstd-dev
+BuildRequires :  rustc
+BuildRequires :  pkg-config
+BuildRequires :  libxcb-dev
+BuildRequires :  freetype-dev
+BuildRequires :  fontconfig-dev
+BuildRequires :  mesa-dev
+BuildRequires :  libxkbcommon-dev
+BuildRequires :  pango-dev
+BuildRequires :  pkgconfig(wayland-client)
+BuildRequires :  pkgconfig(wayland-cursor)
+BuildRequires :  pkgconfig(wayland-protocols)
+BuildRequires :  alsa-lib-dev
+BuildRequires :  Vulkan-Headers-dev
+BuildRequires :  openssl-dev
+BuildRequires :  zstd-dev
 
 %description
 Code at the speed of thought - Zed is a high-performance, multiplayer code editor from the creators of Atom and Tree-sitter.
