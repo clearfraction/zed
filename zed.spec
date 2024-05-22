@@ -39,17 +39,19 @@ mv protocol-%{livekit_ver} crates/live_kit_server/protocol
 unset https_proxy http_proxy
 export RUSTFLAGS="$RUSTFLAGS -C target-cpu=westmere -C target-feature=+avx,+fma,+avx2 -C opt-level=3 -C codegen-units=1 -C panic=abort -Clink-arg=-Wl,-z,now,-z,relro,-z,max-page-size=0x4000,-z,separate-code "
 cargo build --release --all-features
+strip target/release/*
 
 
 %install
-install -D -m755 target/release/Zed %{buildroot}/usr/bin/Zed
-# install -D -m0644 extra/linux/*.desktop %%{buildroot}/usr/share/applications/*.desktop
-# install -D -m0644 extra/images/logo.png %{buildroot}/usr/share/pixmaps/zed.png
-strip  --strip-debug %{buildroot}/usr/bin/*
+install -D -m755 target/release/Zed %{buildroot}/usr/bin/zed
+install -D -m755 target/release/cli %{buildroot}/usr/bin/cli
+install -D -m0644 crates/zed/resources/zed.desktop %{buildroot}/usr/share/applications/zed.desktop
+install -D -m0644 crates/zed/resources/app-icon.png %{buildroot}/usr/share/icons/hicolor/512x512/apps/zed.png
 
 
 %files
 %defattr(-,root,root,-)
-/usr/bin/Zed
-#/usr/share/applications/*.desktop
-#/usr/share/pixmaps/*.png
+/usr/bin/zed
+/usr/bin/cli
+/usr/share/applications/*.desktop
+/usr/share/icons/hicolor/512x512/apps/zed.png
