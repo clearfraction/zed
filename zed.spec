@@ -37,7 +37,8 @@ mv protocol-%{livekit_ver} crates/live_kit_server/protocol
 
 %build
 unset https_proxy http_proxy
-export RUSTFLAGS="$RUSTFLAGS -C target-cpu=westmere -C target-feature=+avx,+fma,+avx2 -C opt-level=3 -C codegen-units=1 -C panic=abort -Clink-arg=-Wl,-z,now,-z,relro,-z,max-page-size=0x4000,-z,separate-code --cfg gles "
+export RUSTFLAGS="$RUSTFLAGS -C target-cpu=westmere -C target-feature=+avx,+fma,+avx2 -C opt-level=3 -C codegen-units=1 -C panic=abort -Clink-arg=-Wl,-z,now,-z,relro,-z,max-page-size=0x4000,-z,separate-code  "
+# --cfg gles    <= doesn't works, saved for the future
 cargo build --release --package zed --package cli
 strip target/release/Zed target/release/cli
 
