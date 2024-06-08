@@ -54,5 +54,5 @@ install -D -m0644 crates/zed/resources/app-icon.png %{buildroot}/usr/share/icons
 %defattr(-,root,root,-)
 /usr/bin/zed
 /usr/bin/cli
-/usr/share/applications/*.desktop
+#/usr/share/applications/*.desktop
 /usr/share/icons/hicolor/512x512/apps/zed.png
