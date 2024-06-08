@@ -46,7 +46,7 @@ strip target/release/Zed target/release/cli
 %install
 install -D -m755 target/release/Zed %{buildroot}/usr/bin/zed
 install -D -m755 target/release/cli %{buildroot}/usr/bin/cli
-install -D -m0644 crates/zed/resources/zed.desktop %{buildroot}/usr/share/applications/zed.desktop
+install -D -m0644 crates/zed/resources/*.desktop %{buildroot}/usr/share/applications/zed.desktop
 install -D -m0644 crates/zed/resources/app-icon.png %{buildroot}/usr/share/icons/hicolor/512x512/apps/zed.png
 
 
