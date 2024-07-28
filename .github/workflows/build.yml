@@ -8,10 +8,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - name: Building a package
-        run: |
-          curl -LO https://raw.githubusercontent.com/clearfraction/tools/master/build-core.sh && chmod +x build-core.sh
-          docker run --privileged --cap-add=SYS_ADMIN --security-opt apparmor:unconfined -v $(pwd):/home clearlinux:latest sh -c "cd /home && ./build-core.sh"
+      #- name: Building a package
+      #  run: |
+      #    curl -LO https://raw.githubusercontent.com/clearfraction/tools/master/build-core.sh && chmod +x build-core.sh
+      #    docker run --privileged --cap-add=SYS_ADMIN --security-opt apparmor:unconfined -v $(pwd):/home clearlinux:latest sh -c "cd /home && ./build-core.sh"
+      - run: |
+           
+           export RELEASE=$(curl -s https://api.github.com/repos/zed-industries/zed/releases/latest | grep -oP '"tag_name": "v\K(.*)(?=")')
+           mkdir RPMS; touch RPMS/zed-"$RELEASE".rpm
+           for i in {1..10}; do hub release create -m $RELEASE -m v$RELEASE -a RPMS/zed-"$RELEASE".rpm && break; sleep 100; done
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_USER:  paulcarroty
       - name: Upload result
         uses: actions/upload-artifact@v2
         with:
