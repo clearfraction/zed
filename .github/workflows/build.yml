@@ -14,8 +14,8 @@ jobs:
           docker run --privileged --cap-add=SYS_ADMIN --security-opt apparmor:unconfined -v $(pwd):/home clearlinux:latest sh -c "cd /home && ./build-core.sh"
       - run: |
            export RELEASE=$(curl -s https://api.github.com/repos/zed-industries/zed/releases/latest | grep -oP '"tag_name": "v\K(.*)(?=")')
-           sudo apt install hub rpm2cpio
-           rpm2cpio RPMS/zed-"$RELEASE"-1.x86_64.rpm | cpio -D zed-"$RELEASE"
+           sudo apt install hub rpm2cpio cpio
+           rpm2cpio RPMS/zed-"$RELEASE"-1.x86_64.rpm | cpio -D zed-"$RELEASE" -idm
            tar cvfz zed-"$RELEASE".tar.gz zed-"$RELEASE" && rm -rf zed-"$RELEASE"
            hub release create $RELEASE -m v"$RELEASE" -a RPMS/zed-"$RELEASE".rpm -a zed-"$RELEASE".tar.gz  || for i in {1..10}; do hub release edit "$RELEASE" -a RPMS/zed-"$RELEASE".rpm -a zed-"$RELEASE".tar.gz -m v"$RELEASE" && break; sleep 100; done
         env:
