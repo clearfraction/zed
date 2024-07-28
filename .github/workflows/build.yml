@@ -8,14 +8,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - name: Building a package
-        run: |
-          curl -LO https://raw.githubusercontent.com/clearfraction/tools/master/build-core.sh && chmod +x build-core.sh
-          docker run --privileged --cap-add=SYS_ADMIN --security-opt apparmor:unconfined -v $(pwd):/home clearlinux:latest sh -c "cd /home && ./build-core.sh"
+      #- name: Building a package
+       # run: |
+        #  curl -LO https://raw.githubusercontent.com/clearfraction/tools/master/build-core.sh && chmod +x build-core.sh
+        #  docker run --privileged --cap-add=SYS_ADMIN --security-opt apparmor:unconfined -v $(pwd):/home clearlinux:latest sh -c "cd /home && ./build-core.sh"
       - run: |
            export RELEASE=$(curl -s https://api.github.com/repos/zed-industries/zed/releases/latest | grep -oP '"tag_name": "v\K(.*)(?=")')
            sudo apt install hub rpm2cpio cpio
-           mkdir zed-"$RELEASE" && rpm2cpio RPMS/zed-"$RELEASE"-1.x86_64.rpm | cpio -D zed-"$RELEASE" -idm
+           sudo mkdir RPMS && sudo chmod 755 RPMS && curl -L -o RPMS/zed-"$RELEASE"-1.x86_64.rpm https://download.opensuse.org/repositories/editors/openSUSE_Tumbleweed/x86_64/zed-0.144.4-1.6.x86_64.rpm
+           sudo mkdir zed-"$RELEASE" && rpm2cpio RPMS/zed-"$RELEASE"-1.x86_64.rpm | cpio -D zed-"$RELEASE" -idm
            tar cvfz zed-"$RELEASE".tar.gz zed-"$RELEASE" && rm -rf zed-"$RELEASE"
            hub release create $RELEASE -m v"$RELEASE" -a RPMS/zed-"$RELEASE".rpm -a zed-"$RELEASE".tar.gz  || for i in {1..10}; do hub release edit "$RELEASE" -a RPMS/zed-"$RELEASE".rpm -a zed-"$RELEASE".tar.gz -m v"$RELEASE" && break; sleep 100; done
         env:
