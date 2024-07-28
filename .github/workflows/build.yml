@@ -18,7 +18,7 @@ jobs:
            sudo mkdir RPMS && sudo curl -L -o RPMS/zed-"$RELEASE"-1.x86_64.rpm https://download.opensuse.org/repositories/editors/openSUSE_Tumbleweed/x86_64/zed-0.144.4-1.6.x86_64.rpm
            sudo mkdir zed-"$RELEASE" && sudo rpm2cpio RPMS/zed-"$RELEASE"-1.x86_64.rpm | sudo cpio -D zed-"$RELEASE" -idm
            sudo tar cvfz zed-"$RELEASE".tar.gz zed-"$RELEASE" && sudo rm -rf zed-"$RELEASE"
-           hub release create $RELEASE -m v"$RELEASE" -a RPMS/zed-"$RELEASE".rpm -a zed-"$RELEASE".tar.gz  || for i in {1..10}; do hub release edit "$RELEASE" -a RPMS/zed-"$RELEASE".rpm -a zed-"$RELEASE".tar.gz -m v"$RELEASE" && break; sleep 100; done
+           hub release create $RELEASE -m v"$RELEASE" -a RPMS/zed-"$RELEASE"-1.x86_64.rpm -a zed-"$RELEASE".tar.gz  || for i in {1..10}; do hub release edit "$RELEASE" -a RPMS/zed-"$RELEASE".rpm -a zed-"$RELEASE".tar.gz -m v"$RELEASE" && break; sleep 100; done
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_USER:  paulcarroty
