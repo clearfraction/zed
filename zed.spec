@@ -36,13 +36,15 @@ Code at the speed of thought - Zed is a high-performance, multiplayer code edito
 %build
 unset https_proxy http_proxy
 export ZED_UPDATE_EXPLANATION="Please use the swupd or cf-zed-updater to update zed."
-export RUSTFLAGS="$RUSTFLAGS -C target-cpu=westmere -C target-feature=+avx,+fma,+avx2 -C opt-level=3 -C codegen-units=1 -C panic=abort -Clink-arg=-Wl,-z,now,-z,relro,-z,max-page-size=0x4000,-z,separate-code  "
+export RUSTFLAGS="$RUSTFLAGS -C target-cpu=westmere -C target-feature=+avx,+fma,+avx2 -C opt-level=3 -C codegen-units=1 -C panic=abort -C link-args=-Wl,--disable-new-dtags,-rpath,\$ORIGIN/../lib  "
 # --cfg gles    <= doesn't works, saved for the future
 cargo build --release --package zed --package cli
 strip target/release/zed target/release/cli
 
 
 %install
+export RELEASE_VERSION=%{version}
+export ZED_BUNDLE=true
 export DO_STARTUP_NOTIFY="false"
 export APP_ZED="zed-editor"
 export APP_CLI="zed"
