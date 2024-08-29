@@ -30,11 +30,19 @@ Code at the speed of thought - Zed is a high-performance, multiplayer code edito
 
 
 %prep
+export APP_ZED="zed-editor"
+export APP_CLI="zed"
+export APP_ICON="zed"
+export APP_NAME="Zed"
+export ZED_BUNDLE=true
+export DO_STARTUP_NOTIFY="false"
 %setup -q -n zed-%{version}
+
 
 
 %build
 unset https_proxy http_proxy
+export RELEASE_VERSION=%{version}
 export ZED_UPDATE_EXPLANATION="Please use the swupd or cf-zed-updater to update zed."
 export RUSTFLAGS="$RUSTFLAGS -C target-cpu=westmere -C target-feature=+avx,+fma,+avx2 -C opt-level=3 -C codegen-units=1 -C panic=abort -C link-args=-Wl,--disable-new-dtags,-rpath,\$ORIGIN/../lib  "
 # --cfg gles    <= doesn't works, saved for the future
@@ -43,13 +51,6 @@ strip target/release/zed target/release/cli
 
 
 %install
-export RELEASE_VERSION=%{version}
-export ZED_BUNDLE=true
-export DO_STARTUP_NOTIFY="false"
-export APP_ZED="zed-editor"
-export APP_CLI="zed"
-export APP_ICON="zed"
-export APP_NAME="Zed"
 envsubst < crates/zed/resources/zed.desktop.in > crates/zed/resources/zed.desktop
 install -D -m0755 target/release/cli %{buildroot}/usr/bin/zed
 install -D -m0755 target/release/zed %{buildroot}/usr/libexec/zed-editor
