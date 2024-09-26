@@ -24,6 +24,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_USER:  paulcarroty
       - name: Upload result
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@master
         with:
           path: RPMS/*.rpm
