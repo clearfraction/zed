@@ -5,7 +5,7 @@ URL:            https://github.com/zed-industries/zed
 Source0:        https://github.com/zed-industries/zed/archive/refs/tags/v%{version}.tar.gz
 Summary:        Lightning-fast and Powerful Code Editor written in Rust
 License:        AGPL-3.0-or-later
-BuildRequires :  rustc llvm
+BuildRequires :  rustc llvm cmake
 BuildRequires :  pkg-config
 BuildRequires :  libxcb-dev
 BuildRequires :  freetype-dev
