@@ -44,7 +44,7 @@ export DO_STARTUP_NOTIFY="false"
 unset https_proxy http_proxy
 export RELEASE_VERSION=%{version}
 export ZED_UPDATE_EXPLANATION="Please use the swupd or cf-zed-updater to update zed."
-export RUSTFLAGS="$RUSTFLAGS -C target-cpu=westmere -C target-feature=+avx,+fma,+avx2 -C opt-level=3 -C codegen-units=1 -C panic=abort -C link-args=-Wl,--disable-new-dtags,-rpath,\$ORIGIN/../lib --cfg gles "
+export RUSTFLAGS="$RUSTFLAGS -C target-cpu=westmere -C target-feature=+avx,+fma,+avx2 -C opt-level=3 -C codegen-units=1 -C panic=abort -C link-args=-Wl,--disable-new-dtags,-rpath,\$ORIGIN/../lib "
 # --cfg gles    <= doesn't works, saved for the future
 cargo build --release --package zed --package cli
 strip target/release/zed target/release/cli
