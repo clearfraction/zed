@@ -23,6 +23,7 @@ BuildRequires :  zstd-dev
 BuildRequires :  pkgconfig(libcurl)
 BuildRequires :  pkgconfig(libgit2)
 BuildRequires :  pkgconfig(sqlite3)
+BuildRequires :  protobuf-dev
 
 
 %description
@@ -30,13 +31,15 @@ Code at the speed of thought - Zed is a high-performance, multiplayer code edito
 
 
 %prep
-export APP_ZED="zed-editor"
-export APP_CLI="zed"
+export DO_STARTUP_NOTIFY="true"
 export APP_ICON="zed"
 export APP_NAME="Zed"
-export ZED_BUNDLE=true
-export DO_STARTUP_NOTIFY="false"
+export APP_CLI="zed"
+export APP_ID="dev.zed.Zed"
+export APP_ARGS="%U"
 %setup -q -n zed-%{version}
+envsubst < crates/zed/resources/zed.desktop.in > crates/zed/resources/zed.desktop
+
 
 
 
@@ -46,12 +49,13 @@ export RELEASE_VERSION=%{version}
 export ZED_UPDATE_EXPLANATION="Please use the swupd or cf-zed-updater to update zed."
 export RUSTFLAGS="$RUSTFLAGS -C target-cpu=westmere -C target-feature=+avx,+fma,+avx2 -C opt-level=3 -C codegen-units=1 -C panic=abort -C link-args=-Wl,--disable-new-dtags,-rpath,\$ORIGIN/../lib "
 # --cfg gles    <= doesn't works, saved for the future
+export PROTOC=/usr/bin/protoc
+export PROTOC_INCLUDE=/usr/include
 cargo build --release --package zed --package cli
 strip target/release/zed target/release/cli
 
 
 %install
-envsubst < crates/zed/resources/zed.desktop.in > crates/zed/resources/zed.desktop
 install -D -m0755 target/release/cli %{buildroot}/usr/bin/zed
 install -D -m0755 target/release/zed %{buildroot}/usr/libexec/zed-editor
 install -D -m0644 crates/zed/resources/zed.desktop %{buildroot}/usr/share/applications/zed.desktop
