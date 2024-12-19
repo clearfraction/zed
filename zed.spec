@@ -24,6 +24,7 @@ BuildRequires :  pkgconfig(libcurl)
 BuildRequires :  pkgconfig(libgit2)
 BuildRequires :  pkgconfig(sqlite3)
 BuildRequires :  protobuf-dev
+BuildRequires :  perl-local-lib perl-Module-Find perl-IPC-Run perl-File-Copy-Recursive 
 
 
 %description
