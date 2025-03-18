@@ -2,7 +2,8 @@ Name:           zed
 Version:        %(unset https_proxy && curl -s https://api.github.com/repos/zed-industries/zed/releases/latest | grep -oP '"tag_name": "v\K(.*)(?=")')
 Release:        1
 URL:            https://github.com/zed-industries/zed
-Source0:        https://github.com/zed-industries/zed/archive/refs/tags/v%{version}.tar.gz
+#Source0:        https://github.com/zed-industries/zed/archive/refs/tags/v%%{version}.tar.gz
+Source0:        https://github.com/huacnlee/zed/archive/97ec9c5e108b957df7c1918f1f4ba7d2b5281b4f.tar.gz
 Summary:        Lightning-fast and Powerful Code Editor written in Rust
 License:        AGPL-3.0-or-later
 BuildRequires :  rustc llvm cmake
@@ -38,7 +39,8 @@ export APP_NAME="Zed"
 export APP_CLI="zed"
 export APP_ID="dev.zed.Zed"
 export APP_ARGS="%U"
-%setup -q -n zed-%{version}
+#%%setup -q -n zed-%%{version}
+%setup -q -n zed-97ec9c5e108b957df7c1918f1f4ba7d2b5281b4f
 envsubst < crates/zed/resources/zed.desktop.in > crates/zed/resources/zed.desktop
 
 
