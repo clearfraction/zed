@@ -50,7 +50,7 @@ envsubst < crates/zed/resources/zed.desktop.in > crates/zed/resources/zed.deskto
 unset https_proxy http_proxy
 export RELEASE_VERSION=%{version}
 export ZED_UPDATE_EXPLANATION="Please use the swupd or cf-zed-updater to update zed."
-export RUSTFLAGS="$RUSTFLAGS -C target-cpu=westmere -C target-feature=+avx,+fma,+avx2 -C opt-level=3 -C codegen-units=1 -C panic=abort -C link-args=-Wl,--disable-new-dtags,-rpath,\$ORIGIN/../lib "
+export RUSTFLAGS="$RUSTFLAGS -C target-cpu=westmere -C target-feature=+avx,+fma,+avx2 -C opt-level=3 -C codegen-units=1 -C panic=abort -C link-args=-Wl,--disable-new-dtags,-rpath,\$ORIGIN/../lib --cfg gles "
 # --cfg gles    <= doesn't works, saved for the future
 export PROTOC=/usr/bin/protoc
 export PROTOC_INCLUDE=/usr/include
